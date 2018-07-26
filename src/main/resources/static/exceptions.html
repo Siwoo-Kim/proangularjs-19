@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html ng-app="exampleApp">
+<head>
+    <title>Exceptions</title>
+    <script src="ngmodules/angular.js"></script>
+    <script src="services/services.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        angular.module("exampleApp", [])
+            .controller("defaultCtrl", function ($scope, $exceptionHandler) {
+                $scope.throwException = function () {
+                    try{
+                        throw new Error("Triggered exception");
+                    }catch (e) {
+                        $exceptionHandler(e.message, "Button Click");
+                    }
+
+                }
+            })
+    </script>
+</head>
+<body ng-controller="defaultCtrl">
+    <div class="panel panel-default container">
+        <button class="btn btn-danger" ng-click="throwException()">Throw Exception</button>
+    </div>
+</body>
+</html>

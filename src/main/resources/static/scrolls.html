@@ -3,25 +3,46 @@
 <head>
     <title>Scrolls</title>
     <script src="ngmodules/angular.js"></script>
+    <script src="services/services.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <script>
-        angular.module("exampleApp", [])
-            .controller("defaultCtrl", function ($scope, $location, $anchorScroll) {
+        angular.module("exampleApp", [
+            "customServices",
+        ])
+            .config(function ($logProvider) {
+                $logProvider.debugEnabled(true);
+            })
+            .controller("defaultCtrl", function ($scope, $location, $anchorScroll, logService, $log) {
                 $scope.itemCount = 50;
                 $scope.items = [];
 
-                for(var i =0; i < $scope.itemCount; i++) {
+                for(let i=0; i<$scope.itemCount; i++) {
                     $scope.items[i] = "Item " + i;
                 }
 
                 $scope.show = function (id) {
                     $location.hash(id);
+                    $log.debug("scroll moved");
                 }
             })
     </script>
 </head>
 <body ng-controller="defaultCtrl" class="well">
+<div class="panel panel-default">
+    <p id="top">Top</p>
+    <button class="btn btn-primary" ng-click="show('bottom')">bottom</button>
+    <h4 class="panel-heading">URL</h4>
+    <div class="panel-body">
+        <p>
+            <ul>
+                <li ng-repeat="item in items"> {{ item }}</li>
+            </ul>
+        </p>
+    </div>
+    <p id="bottom">bottom</p>
+    <button class="btn btn-primary" ng-click="show('top')">top</button>
+</div>
 <div class="panel-heading">URL</div>
 <div class="panel-body">
     <p>The URL is: {{ url }}</p>
